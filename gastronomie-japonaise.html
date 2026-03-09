@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gastronomie Japonaise — Guide Complet</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Shippori+Mincho:wght@400;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1008;
+    --paper: #f5f0e8;
+    --red: #c0392b;
+    --gold: #c9a84c;
+    --grey: #7a6f62;
+    --light: #ede8e0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '食';
+    position: absolute;
+    right: -20px;
+    top: -40px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 280px;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+  }
+
+  header h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  header .subtitle {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .controls {
+    background: var(--light);
+    border-bottom: 1px solid #d4cfc5;
+    padding: 16px 40px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .controls span {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-right: 4px;
+  }
+
+  .filter-btn {
+    background: none;
+    border: 1px solid #c5bfb5;
+    padding: 5px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    cursor: pointer;
+    color: var(--grey);
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .search-box {
+    margin-left: auto;
+    border: 1px solid #c5bfb5;
+    padding: 5px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: white;
+    width: 200px;
+    color: var(--ink);
+  }
+
+  .search-box:focus { outline: none; border-color: var(--ink); }
+
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+
+  .section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin: 40px 0 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #d4cfc5;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1px;
+    background: #d4cfc5;
+    border: 1px solid #d4cfc5;
+  }
+
+  .card {
+    background: var(--paper);
+    padding: 24px;
+    transition: background 0.15s;
+    position: relative;
+  }
+
+  .card:hover { background: #fff; }
+
+  .card-visual {
+    font-size: 38px;
+    line-height: 1;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .dish-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .dish-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    color: var(--grey);
+    font-weight: 300;
+  }
+
+  .tag {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .tag-nouilles { color: #7b5e3a; border-color: #7b5e3a; }
+  .tag-riz { color: #4a7c59; border-color: #4a7c59; }
+  .tag-viande { color: #8b2e2e; border-color: #8b2e2e; }
+  .tag-poisson { color: #2e5c8b; border-color: #2e5c8b; }
+  .tag-légumes { color: #5c7a2e; border-color: #5c7a2e; }
+  .tag-street { color: #8b5e2e; border-color: #8b5e2e; }
+  .tag-dessert { color: #8b4a7a; border-color: #8b4a7a; }
+  .tag-soupe { color: #2e7a6b; border-color: #2e7a6b; }
+  .tag-grill { color: #8b3d2e; border-color: #8b3d2e; }
+  .tag-tofu { color: #6b7a2e; border-color: #6b7a2e; }
+  .tag-friture { color: #7a6b2e; border-color: #7a6b2e; }
+  .tag-fermenté { color: #4a6b7a; border-color: #4a6b7a; }
+  .tag-pâtisserie { color: #7a3d6b; border-color: #7a3d6b; }
+  .tag-alcool { color: #5c2e7a; border-color: #5c2e7a; }
+  .tag-condiment { color: #4a4a4a; border-color: #4a4a4a; }
+
+  .desc {
+    font-size: 12px;
+    color: #3a3028;
+    margin: 10px 0 14px;
+    line-height: 1.65;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-top: 14px;
+    border-top: 1px solid #ddd8cf;
+  }
+
+  .meta-item label {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 2px;
+  }
+
+  .meta-item .value {
+    font-size: 11px;
+    color: var(--ink);
+  }
+
+  .adresse {
+    grid-column: 1 / -1;
+  }
+
+  .adresse .value {
+    color: var(--red);
+    font-size: 11px;
+  }
+
+  .count {
+    font-size: 10px;
+    color: var(--grey);
+    margin-bottom: 20px;
+    letter-spacing: 0.1em;
+  }
+
+  .hidden { display: none; }
+
+  /* === TRAVEL TIPS === */
+  .travel-section {
+    margin-top: 70px;
+    padding-top: 0;
+    border-top: 2px solid var(--ink);
+  }
+
+  .travel-section .section-title {
+    font-size: 13px;
+    color: var(--ink);
+    letter-spacing: 0.25em;
+    margin-top: 30px;
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1px;
+    background: #d4cfc5;
+    border: 1px solid #d4cfc5;
+    margin-bottom: 50px;
+  }
+
+  .tip-card {
+    background: var(--paper);
+    padding: 24px;
+    transition: background 0.15s;
+  }
+
+  .tip-card:hover { background: #fff; }
+
+  .tip-icon {
+    font-size: 30px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .tip-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .tip-body {
+    font-size: 12px;
+    color: #3a3028;
+    line-height: 1.7;
+  }
+
+  .tip-body strong {
+    color: var(--red);
+  }
+
+  .planning-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #d4cfc5;
+    border: 1px solid #d4cfc5;
+  }
+
+  .planning-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px;
+  }
+
+  .planning-city {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 2px;
+  }
+
+  .planning-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 20px;
+    color: rgba(255,255,255,0.2);
+    margin-bottom: 20px;
+  }
+
+  .planning-item {
+    font-size: 11px;
+    line-height: 1.8;
+    border-left: 2px solid var(--red);
+    padding-left: 12px;
+    margin-bottom: 14px;
+  }
+
+  .planning-item strong {
+    color: var(--gold);
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  /* === LIENS DISCRETS === */
+  .section-links {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .section-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey);
+    text-decoration: none;
+    border: 1px solid #c5bfb5;
+    padding: 3px 8px;
+    transition: all 0.2s;
+  }
+
+  .section-link:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .tip-link {
+    color: var(--red);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(192,57,43,0.3);
+    transition: border-color 0.15s;
+  }
+
+  .tip-link:hover {
+    border-bottom-color: var(--red);
+  }
+
+  /* === COUPS DE CŒUR === */
+  .coups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: #d4cfc5;
+    border: 1px solid #d4cfc5;
+    margin-bottom: 50px;
+  }
+
+  .coup-card {
+    background: #f0ebe0;
+    padding: 22px;
+    transition: background 0.15s;
+    border-left: 3px solid var(--gold);
+  }
+
+  .coup-card:hover { background: #fff; }
+
+  .coup-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .coup-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .coup-where {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .coup-body {
+    font-size: 12px;
+    color: #3a3028;
+    line-height: 1.65;
+  }
+
+  .footer-note {
+    text-align: center;
+    padding: 50px 40px;
+    color: var(--grey);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .footer-note .jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 32px;
+    color: var(--red);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 900px) {
+    .planning-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 40px 20px 30px; }
+    header h1 { font-size: 28px; }
+    main { padding: 20px; }
+    .controls { padding: 12px 20px; }
+    .search-box { width: 100%; margin-left: 0; }
+    .grid { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .planning-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Gastronomie Japonaise</h1>
+  <div class="subtitle">Guide complet — Plats, origines, adresses &amp; conseils voyage</div>
+</header>
+
+<div class="controls">
+  <span>Filtrer</span>
+  <button class="filter-btn active" onclick="filter('all', this)">Tout</button>
+  <button class="filter-btn" onclick="filter('nouilles', this)">Nouilles</button>
+  <button class="filter-btn" onclick="filter('riz', this)">Riz</button>
+  <button class="filter-btn" onclick="filter('poisson', this)">Poisson/Mer</button>
+  <button class="filter-btn" onclick="filter('viande', this)">Viande</button>
+  <button class="filter-btn" onclick="filter('grill', this)">Grillades</button>
+  <button class="filter-btn" onclick="filter('friture', this)">Fritures</button>
+  <button class="filter-btn" onclick="filter('street', this)">Street food</button>
+  <button class="filter-btn" onclick="filter('dessert', this)">Desserts</button>
+  <button class="filter-btn" onclick="filter('pâtisserie', this)">Pâtisseries</button>
+  <button class="filter-btn" onclick="filter('soupe', this)">Soupes</button>
+  <button class="filter-btn" onclick="filter('tofu', this)">Tofu</button>
+  <button class="filter-btn" onclick="filter('légumes', this)">Légumes</button>
+  <button class="filter-btn" onclick="filter('fermenté', this)">Fermentés</button>
+  <button class="filter-btn" onclick="filter('alcool', this)">Boissons</button>
+  <input class="search-box" type="text" placeholder="Rechercher un plat..." oninput="search(this.value)">
+</div>
+
+<main>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+
+  <!-- CONSEILS DE VOYAGE -->
+  <div class="travel-section">
+    <div class="section-title">Conseils pratiques pour le voyage gastronomique</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <span class="tip-icon">📅</span>
+        <div class="tip-title">Réservations</div>
+        <div class="tip-body">Les meilleurs restaurants exigent une réservation <strong>des semaines à l'avance</strong>. Les services <a href="https://tableall.com" target="_blank" class="tip-link"><strong>TABLEALL</strong></a> ou <a href="https://omakase.in/en/" target="_blank" class="tip-link"><strong>Omakase</strong></a> facilitent les réservations pour les non-japonophones. Pour le kaiseki ou les sushis haut de gamme, réservez depuis la France si possible.</div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">💴</span>
+        <div class="tip-title">Paiement : cash obligatoire</div>
+        <div class="tip-body">De nombreux petits restaurants <strong>n'acceptent que le liquide (yen)</strong>. Prévoyez toujours du cash sur vous. Izakayas, stands de street food et restaurants de quartier fonctionnent quasi exclusivement en espèces. Les combinis acceptent les cartes.</div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🙏</span>
+        <div class="tip-title">Étiquette à table</div>
+        <div class="tip-body"><strong>Pas de pourboire au Japon</strong> — jamais, nulle part. Dites <strong>« Itadakimasu »</strong> avant de manger et <strong>« Gochisōsama deshita »</strong> en partant. Retirez vos chaussures dans les restaurants traditionnels. Ne plantez jamais les baguettes verticalement dans le riz.</div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🕐</span>
+        <div class="tip-title">Horaires</div>
+        <div class="tip-body">Certains restaurants n'ouvrent <strong>qu'au déjeuner</strong> (11h30–14h). Le <strong>mardi est le jour de fermeture fréquent à Osaka</strong>. Vérifiez les horaires à l'avance — Google Maps n'est pas toujours à jour. Arrivez à l'ouverture pour éviter les files d'attente.</div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">📱</span>
+        <div class="tip-title">Application indispensable</div>
+        <div class="tip-body"><a href="https://tabelog.com/en/" target="_blank" class="tip-link"><strong>Tabelog</strong></a> est la référence pour les restaurants au Japon (note sur 5). Au-dessus de <strong>3.5 = excellent</strong>, au-dessus de 3.8 = exceptionnel. <a href="https://maps.google.com" target="_blank" class="tip-link">Google Maps</a> fonctionne aussi mais Tabelog est plus précis sur la qualité réelle. Disponible en anglais.</div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🏪</span>
+        <div class="tip-title">Les combinis — ne pas sous-estimer</div>
+        <div class="tip-body"><strong>7-Eleven, FamilyMart et Lawson</strong> sont gastronomiquement sérieux au Japon. Onigiri frais, nikuman chaud en hiver, katsu sando, soba en pot, oden automne-hiver — un repas combini à 500¥ peut dépasser un mauvais restaurant. Incontournable.</div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🌸</span>
+        <div class="tip-title">Saisonnalité — cuisiner avec le calendrier</div>
+        <div class="tip-body">La cuisine japonaise est profondément <strong>saisonnière</strong>. <strong>Printemps :</strong> sakura mochi, hamaguri. <strong>Été :</strong> hiyashi chūka, kakigōri, sōmen. <strong>Automne :</strong> matsutake, sanma. <strong>Hiver :</strong> nabe, fugu, yudōfu, oden. Adaptez votre voyage aux saisons.</div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🗺️</span>
+        <div class="tip-title">Quartiers gastronomiques clés</div>
+        <div class="tip-body"><strong>Tokyo :</strong> Tsukiji outer market, Yurakucho sous les rails, Shimokitazawa. <strong>Osaka :</strong> Dotonbori, Kuromon Ichiba, Tenma, Shinsekai. <strong>Kyoto :</strong> Nishiki Market, Pontocho, Gion, Fushimi (saké). Chaque quartier a une identité forte.</div>
+      </div>
+    </div>
+
+    <!-- PLANNING GASTRONOMIQUE -->
+    <div class="section-title">Planning gastronomique recommandé — Tokyo · Osaka · Kyoto</div>
+    <div class="planning-grid">
+      <div class="planning-card">
+        <div class="planning-city">Tokyo</div>
+        <div class="planning-jp">東京</div>
+        <div class="planning-item">
+          <strong>Matin</strong>
+          Tsukiji outer market — sashimi &amp; tamagoyaki frais sur le pouce dès 6h
+        </div>
+        <div class="planning-item">
+          <strong>Déjeuner</strong>
+          Ramen chez AFURI (yuzu shio) ou Fuunji (tsukemen, Shinjuku) — arriver tôt
+        </div>
+        <div class="planning-item">
+          <strong>Après-midi</strong>
+          Tonkatsu chez Maisen (Omotesando) · Taiyaki chez Naniwaya Souhonten (Azabu-Juban)
+        </div>
+        <div class="planning-item">
+          <strong>Soir</strong>
+          Yakitori sous les voies ferrées de Yurakucho · Izakaya à Shimokitazawa ou Shinjuku
+        </div>
+        <div class="planning-item">
+          <strong>Ne pas manquer</strong>
+          Monjayaki à Tsukishima · Gyukatsu Motomura · Sushi omakase à Ginza · Onigiri Bongo (Otsuka)
+        </div>
+      </div>
+      <div class="planning-card">
+        <div class="planning-city">Osaka</div>
+        <div class="planning-jp">大阪</div>
+        <div class="planning-item">
+          <strong>Matin</strong>
+          Marché Kuromon Ichiba — sashimi frais, crevettes grillées, fruits de mer dès 8h
+        </div>
+        <div class="planning-item">
+          <strong>Déjeuner</strong>
+          Okonomiyaki chez Mizuno (Dotonbori) ou Kushikatsu chez Daruma (Shinsekai)
+        </div>
+        <div class="planning-item">
+          <strong>Goûter</strong>
+          Takoyaki chez Aizuya · Ikayaki au marché · Ramune au bord du Dotonbori
+        </div>
+        <div class="planning-item">
+          <strong>Soir</strong>
+          Izakaya à Tenma · Fugu chez Zuboraya (Shinsekai) · Udon chez Imai (Dotonbori)
+        </div>
+        <div class="planning-item">
+          <strong>Ne pas manquer</strong>
+          Kaiten-sushi Sushiro · Yakiniku quartier coréen (Tsuruhashi) · Kushikatsu Shinsekai
+        </div>
+      </div>
+      <div class="planning-card">
+        <div class="planning-city">Kyoto</div>
+        <div class="planning-jp">京都</div>
+        <div class="planning-item">
+          <strong>Matin</strong>
+          Marché Nishiki — tsukemono, tamagoyaki, yatsuhashi, matcha à déguster en marchant
+        </div>
+        <div class="planning-item">
+          <strong>Déjeuner</strong>
+          Kaiseki abordable chez Kikunoi (midi dès 6 000¥) · ou Soba chez Matsuba (Gion)
+        </div>
+        <div class="planning-item">
+          <strong>Après-midi</strong>
+          Wagashi chez Toraya · Cérémonie du thé chez Ippodo · Yudōfu à Junsei (Nanzenji)
+        </div>
+        <div class="planning-item">
+          <strong>Soir</strong>
+          Kaiseki à Higashiyama · Izakaya dans Pontocho · Kawadoko sur la Kamogawa (mai–sept)
+        </div>
+        <div class="planning-item">
+          <strong>Ne pas manquer</strong>
+          Shōjin ryōri au temple Tenryū-ji · Obanzai chez Menami · Matcha à Uji
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- COUPS DE CŒUR PERSONNELS -->
+    <div class="section-title" style="margin-top:50px">Bêtises perso, mais à tester !
+      <span class="section-links">
+        <a href="https://salus.jp/backnumber.html" target="_blank" class="section-link" title="Salus — guide resto Tokyo">Salus</a>
+        <a href="https://www.google.com/maps/d/viewer?mid=1odUZqpAZ02-E6jaKX_6yDAa6qqxoD7N3&ll=35.6883083805238%2C139.75368079852217&z=12" target="_blank" class="section-link" title="Carte Google Maps — adresses">Map</a>
+        <a href="https://www.reddit.com/r/finedining/comments/1pjs1aa/i_visited_64_highend_sushi_restaurants_in_japan/" target="_blank" class="section-link" title="Reddit — 64 sushi haut de gamme au Japon">64 sushi</a>
+      </span>
+    </div>
+    <div class="coups-grid">
+      <div class="coup-card">
+        <span class="coup-icon">🥚</span>
+        <div class="coup-title">Sandwich salade d'œufs</div>
+        <div class="coup-where">7-Eleven</div>
+        <div class="coup-body">Le tamago sando du 7-Eleven est une institution. Pain de mie shokupan ultra-moelleux, œufs durs mixés mayo japonaise (Kewpie). Moins de 200¥. Mangez-le au comptoir.</div>
+      </div>
+      <div class="coup-card">
+        <span class="coup-icon">🥚</span>
+        <div class="coup-title">Salade d'œufs</div>
+        <div class="coup-where">Lawson</div>
+        <div class="coup-body">Version Lawson légèrement différente — texture plus crémeuse, pain encore plus aéré. Le débat 7-Eleven vs Lawson sur le tamago sando est sérieux au Japon. Testez les deux.</div>
+      </div>
+      <div class="coup-card">
+        <span class="coup-icon">🍗</span>
+        <div class="coup-title">Famichiki</div>
+        <div class="coup-where">FamilyMart</div>
+        <div class="coup-body">Poulet pané et épicé vendu chaud au comptoir. Croustillant, juteux, ~180¥. Icône absolue du konbini japonais depuis 1991 — il n'existe nulle part ailleurs. Incontournable.</div>
+      </div>
+      <div class="coup-card">
+        <span class="coup-icon">🥖</span>
+        <div class="coup-title">Baguette chaude au mentaiko</div>
+        <div class="coup-where">Boulangeries japonaises</div>
+        <div class="coup-body">Baguette croustillante garnie de beurre et œufs de morue épicés (mentaiko). Présente dans la plupart des boulangeries artisanales japonaises. Manger chaud, à la sortie du four.</div>
+      </div>
+      <div class="coup-card">
+        <span class="coup-icon">🦔</span>
+        <div class="coup-title">Oursins frais sur place</div>
+        <div class="coup-where">Marché aux poissons — Osaka</div>
+        <div class="coup-body">Uni fraîchement ouvert, dégusté devant l'étal au marché Kuromon Ichiba. Aucun intermédiaire, aucun riz — juste la crème iodée dans sa carapace. Ça ne ressemble à rien d'autre.</div>
+      </div>
+      <div class="coup-card">
+        <span class="coup-icon">🐟</span>
+        <div class="coup-title">Petit-déjeuner au saumon</div>
+        <div class="coup-where">Yoshinoya</div>
+        <div class="coup-body">Le set breakfast de Yoshinoya — riz blanc, filet de saumon grillé, miso shiru, tsukemono, œuf — est l'un des meilleurs rapports qualité/prix du Japon. Moins de 500¥, servi dès l'ouverture.</div>
+      </div>
+      <div class="coup-card">
+        <span class="coup-icon">🍜</span>
+        <div class="coup-title">Ramen en booth individuel</div>
+        <div class="coup-where">Ichiran</div>
+        <div class="coup-body">Ramen tonkotsu Hakata, commandé sur fiche, consommé seul dans un box cloisonné. La solitude choisie comme expérience gastronomique. Personnalisation totale du bouillon, de l'ail, de la fermeté des nouilles.</div>
+      </div>
+      <div class="coup-card">
+        <span class="coup-icon">🍛</span>
+        <div class="coup-title">Curry personnalisé</div>
+        <div class="coup-where">CoCo Ichibanya</div>
+        <div class="coup-body">20 niveaux de piquant, garnitures à la carte, quantité de riz ajustable. L'exact opposé de la cuisine de hasard. Idéal pour une fin de soirée ou un repas de calage avant un long trajet.</div>
+      </div>
+      <div class="coup-card">
+        <span class="coup-icon">🐡</span>
+        <div class="coup-title">Taiyaki à Tokyo</div>
+        <div class="coup-where">Naniwaya Souhonten, Azabu-Juban</div>
+        <div class="coup-body">L'original depuis 1909. Pâte fine et croustillante, anko généreux jusqu'à la queue. File d'attente quasi permanente — méritée. Manger chaud dans la rue, immédiatement.</div>
+      </div>
+    </div>
+
+  <div class="footer-note">
+    <span class="jp">いただきます！</span>
+    Bon appétit — et bon voyage gastronomique
+  </div>
+</main>
+
+<script>
+const dishes = [
+
+  // ─── NOUILLES ───────────────────────────────────────────────────────────────
+  {name:"Ramen",jp:"ラーメン",cat:"nouilles",visual:"🍜",region:"Hokkaido / Fukuoka / Tōkyō",
+   desc:"Bouillon de porc (tonkotsu), poulet, miso ou shōyu, avec nouilles de blé, chashu, œuf mollet, nori. Chaque région impose son style — Sapporo au miso, Hakata au tonkotsu crémeux, Tōkyō au shōyu clair.",
+   adresse:"Ichiran Ramen (Tokyo, Shibuya) — booths individuels, tonkotsu Hakata orthodoxe."},
+
+  {name:"Soba",jp:"そば",cat:"nouilles",visual:"🍝",region:"Nagano / Tōkyō",
+   desc:"Nouilles de sarrasin servies froides (zaru soba) avec dashi-tsuyu, ou chaudes en bouillon. Le sarrasin de Shinshu (Nagano) est référence nationale. Subtilité extrême — les meilleures maisons les roulent à la main.",
+   adresse:"Kanda Yabu Soba (Tokyo, Kanda) — fondée 1880, soba main, cadre historique classé."},
+
+  {name:"Udon",jp:"うどん",cat:"nouilles",visual:"🍜",region:"Kagawa (Sanuki) / Ōsaka",
+   desc:"Épaisses nouilles de blé au mordant élastique caractéristique. Le Sanuki udon de Kagawa est considéré l'étalon absolu — simple, bouillon clair à base d'anchois iriko. Ōsaka propose l'udon au bouillon plus sucré.",
+   adresse:"Dōtonbori Imai (Osaka, Dotonbori) — udon kitsune dans bouillon konbu-katsuobushi, institution depuis 1946."},
+
+  {name:"Sōmen",jp:"そうめん",cat:"nouilles",visual:"🌾",region:"Hyōgo (Ibonoito) / Nara",
+   desc:"Vermicelles de blé fins, servis en été dans eau glacée avec tsuyu léger. À Nagashi-sōmen, on les attrape dans un canal en bambou. Ibonoito (Hyogo) produit les plus réputés depuis 600 ans.",
+   adresse:"Hiryūen (Kyoto, Arashiyama) — nagashi-sōmen en terrasse sur rivière, saisonnier (mai-sept)."},
+
+  {name:"Yakisoba",jp:"焼きそば",cat:"nouilles",visual:"🥡",region:"Nationale",
+   desc:"Nouilles sautées au wok avec porc, chou, carotte, sauce okonomi-style sucrée-umami. Omniprésent dans les matsuri (festivals). Variante : yakiudon avec nouilles épaisses.",
+   adresse:"Partout dans les festivals — à Osaka, Dotonbori propose des stands permanents."},
+
+  {name:"Tsukemen",jp:"つけ麺",cat:"nouilles",visual:"🥢",region:"Tōkyō",
+   desc:"Ramen de trempage : nouilles froides séparées du bouillon concentré chaud. Né à Tokyo dans les années 1950. Bouillon plus intense que le ramen classique, souvent double-soupe poisson + porc.",
+   adresse:"Fuunji (Tokyo, Shinjuku) — file d'attente permanente, tsukemen tori-paitan de référence."},
+
+  {name:"Hiyashi Chūka",jp:"冷やし中華",cat:"nouilles",visual:"🥗",region:"Miyagi / Tōkyō",
+   desc:"Plat estival : nouilles ramen froides nappées de tare vinaigrée ou sésame, garnies de jambon, concombre, œuf mimosa, gingembre. Apparu à Sendai dans les années 1930.",
+   adresse:"Tout restaurant de ramen en été à Tokyo — Kyushu Jangara (Harajuku) en propose une version sésame remarquable."},
+
+  {name:"Champon",jp:"ちゃんぽん",cat:"nouilles",visual:"🦞",region:"Nagasaki",
+   desc:"Héritage chinois-portugais de Nagasaki. Bouillon riche porc + fruits de mer, avec nouilles épaisses et légumes abondants. Dense, généreux, différent du reste de la tradition ramen.",
+   adresse:"Ringer Hut — chaîne nationale née à Nagasaki, version rapide mais authentique."},
+
+  {name:"Tanuki Soba/Udon",jp:"たぬきそば",cat:"nouilles",visual:"🦡",region:"Tōkyō / Kyōto",
+   desc:"Soba ou udon garni de tenkasu (résidu croustillant de tempura) qui absorbent le bouillon. Simple, réconfortant. Tokyo et Kyoto diffèrent sur la garniture exacte — à Kyoto 'tanuki' désigne du tofu frit.",
+   adresse:"Matsuba (Kyoto, Gion) — soba dans bouillon kyo-dashi, cadre historique."},
+
+  {name:"Hōtō",jp:"ほうとう",cat:"nouilles",visual:"🍲",region:"Yamanashi (Mont Fuji)",
+   desc:"Larges nouilles de blé non levées (similaires aux pâtes plates) cuites dans un bouillon miso épais aux légumes de saison et potiron kabocha. Plat paysan montagnard de la région du Mont Fuji, mijoté longuement.",
+   adresse:"Hohto Misosaji (Kawaguchiko, Yamanashi) — référence locale face au lac."},
+
+  // ─── RIZ ────────────────────────────────────────────────────────────────────
+  {name:"Sushi",jp:"寿司",cat:"riz",visual:"🍣",region:"Tōkyō (Edo-mae) / Ōsaka (Oshi-zushi)",
+   desc:"Edo-mae (Tokyo) : nigirizushi — poisson cru sur riz vinaigré, tradition née des stands de rue du XIX°s. Oshi-zushi (Osaka) : pressé en moule rectangulaire. Le produit marin est la variable absolue — thon, sériole, oursin, coquille Saint-Jacques.",
+   adresse:"Sushi Saito (Tokyo, Minato) — référence mondiale, 3 étoiles, réservation quasi-impossible / Kyubey (Tokyo, Ginza) — accessible, qualité constante."},
+
+  {name:"Onigiri",jp:"おにぎり",cat:"riz",visual:"🍙",region:"Nationale",
+   desc:"Boulette de riz compressée triangle ou ovale, garniture intégrée (umeboshi, saumon, thon mayonnaise, katsuobushi). Enveloppée de nori. Aliment quotidien, anti-gaspi par excellence.",
+   adresse:"Onigiri Bongo (Tokyo, Otsuka) — file d'attente, garnitures inventives, institution depuis 1960."},
+
+  {name:"Donburi",jp:"どんぶり",cat:"riz",visual:"🥣",region:"Nationale",
+   desc:"Bol de riz couvert de garniture : gyūdon (bœuf), oyakodon (poulet-œuf), katsudon (porc pané), tendon (tempura), unadon (anguille). Repas rapide, complet, déclinable à l'infini.",
+   adresse:"Yoshinoya (Tokyo) pour gyūdon basique / Keikaku (Tokyo, Ginza) pour le katsudon premium."},
+
+  {name:"Takikomi Gohan",jp:"炊き込みご飯",cat:"riz",visual:"🍚",region:"Nationale",
+   desc:"Riz cuit avec champignons, burdock, carottes, poulet, dans bouillon dashi-saké-mirin. Version automnale avec matsutake (champignon impérial) est parmi les plats les plus onéreux du Japon.",
+   adresse:"Cuisine de kaiseki — Kikunoi (Kyoto, Higashiyama) l'intègre à l'automne."},
+
+  {name:"Omurice",jp:"オムライス",cat:"riz",visual:"🍳",region:"Tōkyō / Ōsaka",
+   desc:"Riz sauté ketchup enveloppé dans omelette fine. Yōshoku — cuisine occidentale japonisée. Né simultanément à Tokyo (Rengatei) et Osaka (Hokkyokusei) vers 1900.",
+   adresse:"Rengatei (Tokyo, Ginza) — berceau autoproclamé, fondé 1895, omurice original sauce demi-glace."},
+
+  {name:"Chahan",jp:"チャーハン",cat:"riz",visual:"🍳",region:"Nationale",
+   desc:"Riz sauté à l'œuf, oignons verts, porc rôti (char siu). Héritage sino-japonais. Le wok pro à 400°C est non-reproductible à domicile — la version restaurant reste supérieure.",
+   adresse:"Keika (Tokyo, Shinjuku) — riz sauté issu d'une tradition ramen, remarquable."},
+
+  {name:"Ochazuke",jp:"お茶漬け",cat:"riz",visual:"🍵",region:"Kyōto",
+   desc:"Riz dans thé vert, dashi, ou eau chaude, garni d'umeboshi, nori, saumon, wasabi. Plat de fin de repas kaiseki à Kyoto, ou comfort food nocturne. Minimalisme total.",
+   adresse:"Nanbantei (Kyoto, Kawaramachi) propose un ochazuke à l'anguille distinctif."},
+
+  {name:"Curry Rice",jp:"カレーライス",cat:"riz",visual:"🍛",region:"Nationale (Yokosuka)",
+   desc:"Curry épais et doux d'influence britannique, popularisé via la marine impériale de Yokosuka. Servi avec riz et souvent tonkatsu (katsu-curry). Plat national — chaîne CoCo Ichibanya propose 20+ niveaux de piquant.",
+   adresse:"CoCo Ichibanya (partout, chaîne) — ou Hakugintei (Yokosuka) pour la version navale originale."},
+
+  {name:"Fukagawa Meshi",jp:"深川めし",cat:"riz",visual:"🦪",region:"Tōkyō (Fukagawa)",
+   desc:"Riz nappé de palourdes (asari) et oignons longs cuits au miso. Plat d'ancien quartier de pêcheurs de l'est tokyoïte. Cuisine populaire Edo, savoureuse et iodée, largement oubliée en dehors du quartier.",
+   adresse:"Miyako (Fukagawa, Tokyo) — tatamis traditionnels, spécialité maison."},
+
+  {name:"Taimeshi",jp:"鯛めし",cat:"riz",visual:"🎣",region:"Ehime (Shikoku) / Wakayama",
+   desc:"Dorade entière cuite sur du riz dans un pot en terre, ou sashimi de dorade sur riz chaud. Plat festif de la péninsule Tōyo (Shikoku) — version Imabari (cuit) vs Uwajima (cru). Symbolise la prospérité.",
+   adresse:"Yotaro Hoten (Osaka, Honmachi) — 2 étoiles Michelin, taimeshi servi en kaiseki."},
+
+  {name:"Tamagokake Gohan",jp:"卵かけごはん",cat:"riz",visual:"🥚",region:"Nationale",
+   desc:"Riz chaud avec œuf cru battu, sauce soja. Aussi simple que fondamental. Consommé au petit déjeuner. La qualité de l'œuf (TKG-yo tamago, élevé spécialement) transforme radicalement le plat.",
+   adresse:"Cuisine domestique — Tamago Station (Tokyo, Akihabara) pour version premium."},
+
+  {name:"Zōsui",jp:"雑炊",cat:"riz",visual:"🍚",region:"Nationale",
+   desc:"Porridge de riz dans bouillon de nabe en fin de repas. Le riz absorbe tout le fond du pot. Réconfort total, gaspillage zéro.",
+   adresse:"Automatique en fin de nabe — tout restaurant spécialisé nabe."},
+
+  // ─── POISSON / FRUITS DE MER ────────────────────────────────────────────────
+  {name:"Sashimi",jp:"刺身",cat:"poisson",visual:"🐟",region:"Côtières — Hokkaidō / Ōsaka / Tōkyō",
+   desc:"Tranches de poisson ou fruits de mer crus, sans riz. La qualité est 100% matière première. Hokkaido : oursin, coquilles Saint-Jacques, saumon. Tokyo : thon gras (ōtoro). Osaka : fugu, poulpe.",
+   adresse:"Tsukiji Outer Market (Tokyo) — stands matinaux, sashimi sur place, frais du matin."},
+
+  {name:"Fugu",jp:"フグ",cat:"poisson",visual:"🐡",region:"Yamaguchi / Ōsaka",
+   desc:"Poisson-globe au foie mortel (tétrodotoxine). Préparation exclusive aux chefs licenciés. Sashimi fugu tranché à 1mm, translucide. Chair douce, presque insipide — l'intérêt est autant rituel que gustatif.",
+   adresse:"Zuboraya (Osaka, Shinsekai) — chaîne spécialisée fugu, abordable, fiable pour une première approche."},
+
+  {name:"Kaisendon",jp:"海鮮丼",cat:"poisson",visual:"🦐",region:"Hokkaidō / Côtes",
+   desc:"Bol de riz surmonté d'assortiment de sashimi — oursin, saumon, crevette, poulpe, ikura (œufs de saumon). Hokkaido est le standard : oursin (uni) de Rishiri ou Rebun, incomparable.",
+   adresse:"Hakodate Ichiba (Hokkaido, Hakodate) — marché matinal, kaisendon fraîcheur absolue."},
+
+  {name:"Unagi",jp:"うなぎ",cat:"poisson",visual:"🐍",region:"Shizuoka / Aichi / Tōkyō",
+   desc:"Anguille de rivière grillée laquée sauce kabayaki (saké, mirin, sucre, soja). Technique Kantō : vapeur puis grill (chair moelleuse). Technique Kansai : direct au grill (peau croustillante). Espèce menacée — prix en hausse.",
+   adresse:"Nodaiwa (Tokyo, Uchisaiwaicho) — fondé 1850, unaju référence, technique Kanto."},
+
+  {name:"Saba Shioyaki",jp:"サバ塩焼き",cat:"poisson",visual:"🐠",region:"Kyūshū / Ōita",
+   desc:"Maquereau grillé au sel — technique shio-yaki applicable à quasi tous poissons. Simplicité absolue : sel, feu, poisson frais. La saison et l'origine du poisson font tout.",
+   adresse:"Izakayas partout — Torikizoku (chaîne) / ou tout restaurant spécialisé poissons à Kyoto."},
+
+  {name:"Ikizukuri",jp:"活き造り",cat:"poisson",visual:"🎏",region:"Ōsaka / Kyūshū",
+   desc:"Sashimi de poisson encore vivant, préparé devant le client. Carpe, daurade, homard. Pratique controversée — interdite dans plusieurs pays. Expérience sensorielle et éthique radicale.",
+   adresse:"Restaurants spécialisés à Osaka — Zuien (Namba) sur demande."},
+
+  {name:"Tamagoyaki",jp:"玉子焼き",cat:"poisson",visual:"🥚",region:"Tōkyō / Kyōto",
+   desc:"Omelette roulée sucrée-salée, cuite en couches successives dans poêle carrée. Topping de sushi ou accompagnement. Tokyo : version sucrée. Osaka : version salée avec dashi.",
+   adresse:"Marunaka (Kyoto, Nishiki) — tamagoyaki sur brochette, marché couvert."},
+
+  {name:"Kaiten-zushi",jp:"回転寿司",cat:"poisson",visual:"🎡",region:"Ōsaka (Higashiosaka)",
+   desc:"Sushi sur tapis roulant — inventé par Yoshiaki Shiraishi à Higashi-Osaka en 1958. Révolution de l'accès au sushi. Chaînes modernes (Sushiro, Kura) ont des systèmes de commande tablette et convoyeur haute vitesse.",
+   adresse:"Sushiro (chaîne, partout) — technologie et fraîcheur à prix abordables."},
+
+  {name:"Mentaiko",jp:"明太子",cat:"poisson",visual:"🐟",region:"Fukuoka / Kyūshū",
+   desc:"Œufs de morue pollock marinés piment — version épicée du tarako. Fukuoka est la capitale absolue. Mangé sur riz, pâtes japonaises, baguette. La Corée du Sud revendique l'origine (myeongnan-jeot).",
+   adresse:"Fukuya (Fukuoka, Hakata) — fondé 1949, premier mentaiko commercialisé."},
+
+  {name:"Chawanmushi",jp:"茶碗蒸し",cat:"poisson",visual:"🍮",region:"Kyūshū / Tōkyō",
+   desc:"Flan salé vapeur d'œuf et dashi, garni crevette, poulet, ginkgo, kamaboko. Texture soyeuse tremblante. Servi dans bol laqué couvert en début de kaiseki ou en restaurant gastronomique.",
+   adresse:"Tobu (Tokyo, Shibuya) — kaiseki abordable incluant chawanmushi."},
+
+  // ─── VIANDE ─────────────────────────────────────────────────────────────────
+  {name:"Wagyu / Shabu-shabu",jp:"和牛しゃぶしゃぶ",cat:"viande",visual:"🥩",region:"Hyōgo (Kobe) / Mie (Matsusaka) / Ōita (Bungo)",
+   desc:"Bœuf wagyu, persillage extrême (grade A5), fondu dans bouillon dashi ou konbu. Kobe, Matsusaka, Omi : trois AOP rivales. La graisse fond à température corporelle — texture unique.",
+   adresse:"Mouriya (Kobe, Kitano) — wagyu Kobe shabu-shabu, cadre formel, référence."},
+
+  {name:"Yakiniku",jp:"焼肉",cat:"viande",visual:"🔥",region:"Nationale (héritage coréen-japonais)",
+   desc:"Grill coréen japanisé — bœuf (kalbi, tan, harami), porc, abats, sur braises au charbon de bois. Sauce tare maison est la signature du restaurant. Héritage Zainichi (communauté coréenne au Japon).",
+   adresse:"Hitoshi (Tokyo, Ebisu) — yakiniku wagyu premium, service omakase charbon."},
+
+  {name:"Tonkatsu",jp:"とんかつ",cat:"viande",visual:"🫓",region:"Tōkyō",
+   desc:"Côtelette de porc panée chapelure panko, frite. Accompagnée chou râpé, moutarde, sauce Worcestershire-based. Né à Tokyo fin XIX°s — yōshoku (cuisine occidentale japonisée). Le panko crée une croûte aérée incomparable.",
+   adresse:"Maisen (Tokyo, Omotesando) — tonkatsu lomo ibérique, la référence."},
+
+  {name:"Chicken Karaage",jp:"唐揚げ",cat:"viande",visual:"🍗",region:"Ōita / Nationale",
+   desc:"Poulet mariné saké-soja-gingembre, frit deux fois. L'Ōita est autoproclamée capitale mondiale du karaage. Croustillant dehors, juteux dedans. Incontournable izakaya.",
+   adresse:"Toritatsu (Tokyo, Shibuya) — karaage de cuisse, peau extra-croustillante."},
+
+  {name:"Gyūtan",jp:"牛タン",cat:"viande",visual:"🥩",region:"Miyagi (Sendai)",
+   desc:"Langue de bœuf grillée au charbon. Sendai en a fait sa spécialité depuis la reconstruction post-WW2, quand les abats américains abondaient. Épaisseur de 1cm, texture ferme, goût profond.",
+   adresse:"Rikyu (Sendai) — le référent / à Tokyo : Gyutan Sumiyaki Rikyu (Akihabara)."},
+
+  {name:"Yakitori",jp:"焼き鳥",cat:"viande",visual:"🍢",region:"Tōkyō / Fukuoka",
+   desc:"Brochettes de poulet grillées au charbon binchōtan — toutes les parties : tsukune (boulette), momo (cuisse), nankotsu (cartilage), kawa (peau), reba (foie), etc. Sauce tare ou sel.",
+   adresse:"Toriyoshi (Tokyo, Yurakucho) — sous les voies ferrées, yakitori binchōtan, atmosphère unique."},
+
+  {name:"Nikujaga",jp:"肉じゃが",cat:"viande",visual:"🥔",region:"Maizuru (Kyōto pref.) / Kure (Hiroshima)",
+   desc:"Ragoût bœuf-pommes de terre-oignons en sauce soja-mirin-saké. 'Pot-au-feu japonais', né d'une tentative de recréer le beef stew européen. Comfort food maternel par excellence.",
+   adresse:"Cuisine maison / izakayas traditionnels — Gonpachi (Tokyo, Nishi-Azabu) version soignée."},
+
+  {name:"Sukiyaki",jp:"すき焼き",cat:"viande",visual:"🫕",region:"Ōsaka (Kansai) / Tōkyō (Kantō)",
+   desc:"Bœuf tranché fin cuit dans sauce sucrée warishita (soja, saké, mirin, sucre), légumes, tofu, shirataki. Kansai : on fait d'abord caraméliser le bœuf seul. Kanto : tout ensemble dans bouillon. On trempe dans l'œuf cru.",
+   adresse:"Imahan (Tokyo, Ueno) — sukiyaki wagyu, fondé 1895, technique Kanto."},
+
+  {name:"Shabu-shabu",jp:"しゃぶしゃぶ",cat:"viande",visual:"♨️",region:"Ōsaka / Tōkyō",
+   desc:"Viande très fine agitée brièvement dans bouillon konbu — 'shabu-shabu' est le son. Accompagnée ponzu ou sesame. Plus délicat que le sukiyaki, bouillon non sucré.",
+   adresse:"Seryna (Tokyo, Roppongi) — shabu-shabu wagyu haut de gamme."},
+
+  {name:"Gyoza",jp:"餃子",cat:"viande",visual:"🥟",region:"Utsunomiya (Tochigi) / Hamamatsu (Shizuoka)",
+   desc:"Raviolis porc-chou-gingembre grillés côté — yaki-gyoza. Croustillants dessous, moelleux dessus. Héritage de la Mandchourie post-WW2. Utsunomiya et Hamamatsu se disputent le titre de capitale nationale.",
+   adresse:"Minmin (Utsunomiya) — institution / à Tokyo : Harajuku Gyoza Lou (Omotesando)."},
+
+  {name:"Jibuni",jp:"治部煮",cat:"viande",visual:"🍲",region:"Kanazawa (Ishikawa)",
+   desc:"Ragoût de canard ou poulet fariné, légumes de saison, fu (gluten de blé) et wasabi, dans un bouillon épais à la fécule de pomme de terre. Spécialité exclusive de Kanazawa, ancienne capitale culturelle du Japon.",
+   adresse:"Restaurants de cuisine Kaga à Kanazawa — Kinjohro (Hashiba-cho) référence."},
+
+  {name:"Hambagu",jp:"ハンバーグ",cat:"viande",visual:"🍔",region:"Nationale (Yōshoku)",
+   desc:"Steak haché façon hamburger, servi avec sauce demi-glace, riz ou pain. Yōshoku populaire des family restaurants — ni hamburger ni steak, catégorie propre à la cuisine japonaise occidentalisée. Irremplaçable comfort food.",
+   adresse:"Kichi Kichi (Kyoto, Kiyamachi) — omurice et hambagu, cuisine de spectacle."},
+
+  {name:"Basashi",jp:"馬刺し",cat:"viande",visual:"🐴",region:"Kumamoto (Kyūshū)",
+   desc:"Viande de cheval crue, tranchée fine comme du sashimi, servie avec sauce soja et gingembre frais. Spécialité quasi exclusive de Kumamoto (Kyushu). Chair rouge intense, goût doux et légèrement sucré.",
+   adresse:"Restaurants traditionnels à Kumamoto (Shimotori arcade) — prix moyen ¥1 000–2 000."},
+
+  // ─── GRILLADES ──────────────────────────────────────────────────────────────
+  {name:"Teppanyaki",jp:"鉄板焼き",cat:"grill",visual:"🔥",region:"Kobe / Ōsaka / Tōkyō",
+   desc:"Viandes (wagyu en premier lieu) et légumes cuits sur plaque chauffante en acier devant les convives. Style né à Kobe avec le bœuf de Kobe. Spectacle autant que repas — le chef cuisine à votre table.",
+   adresse:"Pontocho Hojoan (Kyoto, Pontocho) — vue sur la rivière Kamo, teppanyaki kaiseki."},
+
+  {name:"Robatayaki",jp:"炉端焼き",cat:"grill",visual:"🏕️",region:"Hokkaidō",
+   desc:"Grillade rustique au charbon de bois : poissons entiers, légumes, coquillages, sur longues broches présentées aux clients depuis un foyer central. Né chez les pêcheurs d'Hokkaido. Ambiance brute et conviviale.",
+   adresse:"Izakayas de Tenma (Osaka) — plusieurs enseignes spécialisées robata."},
+
+  // ─── FRITURES ───────────────────────────────────────────────────────────────
+  {name:"Tempura",jp:"天ぷら",cat:"friture",visual:"🍤",region:"Tōkyō",
+   desc:"Beignets héritage portugais (XVI°s), pâte ultra-légère eau-farine à peine mélangée, friture à 180°C dans huile sésame. Crevette, légumes, poisson. La pâte grumeleuse non homogène est la marque du maître.",
+   adresse:"Kondo (Tokyo, Ginza) — tempura légumes référence, 3 étoiles Michelin."},
+
+  {name:"Kushikatsu",jp:"串カツ",cat:"friture",visual:"🍡",region:"Ōsaka (Shinsekai)",
+   desc:"Brochettes de viande, fruits de mer ou légumes enrobés de chapelure panko et frits. Règle absolue : ne jamais tremper deux fois dans la sauce commune (sauce bulldog légère). Temple absolu : Osaka Shinsekai.",
+   adresse:"Daruma (Osaka, Shinsekai) — fondateur du style, fondé 1929, la sauce maison est la référence."},
+
+  {name:"Korokke",jp:"コロッケ",cat:"friture",visual:"🥐",region:"Nationale (Yōshoku)",
+   desc:"Croquettes de pomme de terre et viande hachée (ou crabe, crevette) panées et frites. Héritage yōshoku du début XX°s. Omniprésent dans les épiceries fines, boucheries et marchés couverts. Anti-gaspi populaire.",
+   adresse:"Stands de marchés couverts (Kuromon Ichiba, Osaka / Nishiki Market, Kyoto)."},
+
+  {name:"Gyukatsu",jp:"牛カツ",cat:"friture",visual:"🥩",region:"Tōkyō / Kyōto",
+   desc:"Côtelette de bœuf panée et frite très brièvement, servie saignante (à point sur plaque chauffante individuelle) avec wasabi et sel marin. Tendance émergée dans les années 2010, contrepoint au tonkatsu.",
+   adresse:"Gyukatsu Motomura (Shinjuku, Tokyo) — fondateur du concept, file d'attente permanente."},
+
+  // ─── STREET FOOD ────────────────────────────────────────────────────────────
+  {name:"Takoyaki",jp:"たこ焼き",cat:"street",visual:"🐙",region:"Ōsaka",
+   desc:"Boulettes de pâte avec morceaux de poulpe, gingembre mariné, cebette. Cuites dans moule hémisphérique en fonte, retournées à la broche. Nappées mayo-sauce-bonite-algues. Ōsaka en est le temple absolu.",
+   adresse:"Aizuya (Osaka, Namba) — fondé 1933, berceau du takoyaki moderne."},
+
+  {name:"Okonomiyaki",jp:"お好み焼き",cat:"street",visual:"🥞",region:"Ōsaka / Hiroshima",
+   desc:"Pancake savoureux à base de chou, œuf, farine, garnitures au choix (porc, crevettes, fromage). Osaka : tout mélangé. Hiroshima : couches empilées avec nouilles. Radicalement différents malgré le même nom.",
+   adresse:"Mizuno (Osaka, Dotonbori) — file d'attente, référence Kansai-style."},
+
+  {name:"Monjayaki",jp:"もんじゃ焼き",cat:"street",visual:"🥞",region:"Tōkyō (Tsukishima)",
+   desc:"Galette très liquide de farine, chou et garnitures variées (maïs, fruits de mer, kimchi), grillée directement sur la plaque teppan et mangée à la spatule métallique. Version tokyoïte de l'okonomiyaki — texture crackling incomparable.",
+   adresse:"Monjayaki Street (Tsukishima, Tokyo) — 70+ enseignes dans une seule rue, Hamachan recommandé."},
+
+  {name:"Taiyaki",jp:"たい焼き",cat:"street",visual:"🐡",region:"Tōkyō / Nationale",
+   desc:"Gaufre en forme de daurade fourré pâte de haricots rouges (anko) ou crème anglaise, chocolat. Né à Tokyo en 1909 (Naniwaya Souhonten). Omniprésent dans les matsuri.",
+   adresse:"Naniwaya Souhonten (Tokyo, Azabu-Juban) — l'original depuis 1909."},
+
+  {name:"Ikayaki",jp:"いか焼き",cat:"street",visual:"🦑",region:"Ōsaka / Côtes",
+   desc:"Calmar entier grillé sur charbon, laqué sauce soja-mirin. Texture élastique, goût iodé intense. À Osaka, version aplatie (comme une galette) servie en snack de rue.",
+   adresse:"Stands du marché Kuromon Ichiba (Osaka) — calmar grillé minute."},
+
+  {name:"Mitarashi Dango",jp:"みたらし団子",cat:"street",visual:"🍡",region:"Kyōto",
+   desc:"Brochettes de boules de riz gluant nappées sauce sucrée-salée soja-mirin. Né au sanctuaire Shimogamo de Kyoto. L'une des plus vieilles recettes de street food japonais documentées.",
+   adresse:"Kamo Mitarashi Chaya (Kyoto, Shimogamo) — fondé 1922, lieu d'origine."},
+
+  {name:"Imagawayaki",jp:"今川焼き",cat:"street",visual:"🫓",region:"Tōkyō / Nationale",
+   desc:"Disques épais de pâte au blé, fourrés anko ou custard, cuits dans moules en fonte. Ancêtre du taiyaki. Nom varie par région : Obanyaki à Kyoto.",
+   adresse:"Stands de festival partout — Marché Nishiki (Kyoto) en version Obanyaki."},
+
+  {name:"Yakiimo",jp:"焼き芋",cat:"street",visual:"🍠",region:"Nationale",
+   desc:"Patate douce (satsumaimo) rôtie lentement sur pierres chauffées dans camionnettes itinérantes. La variété Beniharuka rôtie 60-90 min devient fondante et caramélisée. Emblème de l'automne-hiver.",
+   adresse:"Camionnettes yakiimo dans les quartiers résidentiels de Tokyo en novembre-février."},
+
+  {name:"Nikuman",jp:"肉まん",cat:"street",visual:"🥟",region:"Nationale",
+   desc:"Brioche vapeur fourrée au porc épicé (ou anko pour l'anman). Vendue chaude en hiver dans les convenience stores et les stands de marché. Emblème du konbini d'hiver au Japon.",
+   adresse:"7-Eleven / FamilyMart en hiver (comptoir vapeur) — ou Jūichiya (Kyoto, Nishiki Market)."},
+
+  {name:"Katsu Sando",jp:"カツサンド",cat:"street",visual:"🥪",region:"Nationale",
+   desc:"Sandwich de pain de mie (shokupan) garni de tonkatsu ou de wagyu tranché, sauce bulldog et moutarde. De la sandwicherie de quartier au wagyu haut-de-gamme. Devenu icône culinaire internationale.",
+   adresse:"Katsu Sando (Tokyo, Minami-Aoyama) — version wagyu culte / izakayas et konbinis partout."},
+
+  // ─── DESSERTS ───────────────────────────────────────────────────────────────
+  {name:"Mochi",jp:"もち",cat:"dessert",visual:"🍡",region:"Nationale / Nara",
+   desc:"Riz gluant pilé jusqu'à texture élastique. Nature, fourré anko (daifuku), avec thé matcha (matcha mochi). Kagami mochi (offrande) en hiver, sakura mochi au printemps. Risque d'étouffement documenté — à manger lentement.",
+   adresse:"Nakatanidou (Nara) — mochitsuki (pilonnage) spectacle de rue, yomogi mochi au mugwort."},
+
+  {name:"Anmitsu",jp:"あんみつ",cat:"dessert",visual:"🍮",region:"Tōkyō",
+   desc:"Agar-agar en cubes, fruits, anko, mochi, shiratama, sirop de mélasse. Dessert d'été, léger, peu sucré. Né dans les cafés de Tokyo de l'ère Meiji.",
+   adresse:"Ginza Wakamatsu (Tokyo, Ginza) — anmitsu depuis 1894, immuable."},
+
+  {name:"Parfait",jp:"パフェ",cat:"dessert",visual:"🍦",region:"Hokkaidō / Tōkyō",
+   desc:"Parfait géant à la japonaise — couche sur couche : glace, fruits frais, cereales, crème chantilly, sauce, gâteau. Hokkaido : version laitière premium. Culture du '締めパフェ' (parfait en fin de soirée à Sapporo).",
+   adresse:"Bar Yamazaki (Sapporo) — shime-parfait nocturne, institution."},
+
+  {name:"Kakigori",jp:"かき氷",cat:"dessert",visual:"🍧",region:"Nara / Nationale",
+   desc:"Glace rasée ultra-fine, sirop maison (matcha, fraise, yuzu, ume). Nara est devenu épicentre des kakigori artisanaux premium depuis 2010. La texture dépend entièrement de la finesse du rasage.",
+   adresse:"Yoshinoyama Kakigori (Nara) — saisonnier, file d'attente, sirop maison."},
+
+  // ─── PÂTISSERIES ────────────────────────────────────────────────────────────
+  {name:"Wagashi",jp:"和菓子",cat:"pâtisserie",visual:"🌸",region:"Kyōto",
+   desc:"Confiseries japonaises traditionnelles : nerikiri (sculptures de pâte blanche et anko), yokan (gelée azuki), higashi (fleurs de sucre pressé). Langage visuel des saisons. Kyoto en est la capitale incontestée.",
+   adresse:"Toraya (Kyoto/Tokyo) — yokan depuis 1526, fournisseur impérial."},
+
+  {name:"Dorayaki",jp:"どら焼き",cat:"pâtisserie",visual:"🥞",region:"Tōkyō",
+   desc:"Deux pancakes doux soudés par couche d'anko. Né à Tokyo début XX°s. Popularisé mondialement par Doraemon. Simple, calibré, comfort dessert maximal.",
+   adresse:"Usagiya (Tokyo, Ueno) — référence historique, fondé 1913."},
+
+  {name:"Melonpan",jp:"メロンパン",cat:"pâtisserie",visual:"🥐",region:"Ōsaka / Tōkyō",
+   desc:"Viennoiserie à coque sucrée croustillante sur brioche molle — sans melon, juste la forme. Étranger à la melon sauf exception. Boulangeries et convenience stores.",
+   adresse:"Kagetsudo (Tokyo, Asakusa) — melonpan géant, file quotidienne."},
+
+  {name:"Castella",jp:"カステラ",cat:"pâtisserie",visual:"🍰",region:"Nagasaki",
+   desc:"Génoise moelleuse à base d'œufs, farine et sucre roux (wasanbon), inspirée des pâtisseries portugaises. Introduite au XVI°s par les missionnaires à Nagasaki. Texture distincte : fond légèrement caramélisé sucré.",
+   adresse:"Fukusaya (Nagasaki) — fondé 1624, référence absolue / Bunmeido (Tokyo) pour version nationale."},
+
+  {name:"Yatsuhashi",jp:"八ツ橋",cat:"pâtisserie",visual:"🍮",region:"Kyōto",
+   desc:"Biscuit dur de cannelle et farine de riz, spécialité de Kyoto depuis 1689. Version nama (crue) = fine pâte mochi souple fourrée anko ou matcha — devenu le souvenir culinaire le plus emblématique de Kyoto.",
+   adresse:"Shogoin Yatsuhashi Sohonten (Kyoto, Okazaki) — fondé en 1689, boutiques autour de Kiyomizu-dera."},
+
+  {name:"Yokan",jp:"羊羹",cat:"pâtisserie",visual:"🍬",region:"Kyōto / Nationale",
+   desc:"Pâtisserie dense à base d'anko et d'agar-agar, servie en tranches fines. Neri-yokan (ferme) ou mizu-yokan (gélatineux, estival). Accompagne le thé cérémoniel. L'une des confiseries les plus anciennes du Japon.",
+   adresse:"Toraya (Tokyo/Kyoto) — yokan depuis 1526, fournisseur impérial de la Cour."},
+
+  // ─── TOFU / LÉGUMES ─────────────────────────────────────────────────────────
+  {name:"Agedashi Tofu",jp:"揚げ出し豆腐",cat:"tofu",visual:"🫕",region:"Kyōto / Nationale",
+   desc:"Tofu silken frit légèrement fécule de pomme de terre, nappé bouillon tsuyu avec katsuobushi, daikon râpé, gingembre. Croûte fine qui absorbe le bouillon — contraste texture parfait.",
+   adresse:"Tousuiro (Kyoto, Fushimi) — cuisine tofu exclusivement, kaiseki végétalien."},
+
+  {name:"Yudofu",jp:"湯豆腐",cat:"tofu",visual:"💧",region:"Kyōto",
+   desc:"Tofu soyeux simplement poché dans bouillon konbu, trempé sauce ponzu ou sésame. Plat d'hiver du quartier bouddhiste de Nanzenji à Kyoto. Minimalisme zen — la qualité du tofu est tout.",
+   adresse:"Junsei (Kyoto, Nanzenji) — yudofu dans jardin historique depuis 1635."},
+
+  {name:"Shōjin Ryōri",jp:"精進料理",cat:"tofu",visual:"🌿",region:"Kyōto / Kōyasan",
+   desc:"Cuisine monastique bouddhiste, végétalienne absolue. Zéro viande, poisson, alliums (oignon, ail). Techniques de substitution : gomadofu (tofu sésame), fu (gluten de blé), racines. Expérience autant spirituelle que culinaire.",
+   adresse:"Tenryuji (Kyoto, Arashiyama) — shojin ryori dans temple zen Rinzai, réservation indispensable."},
+
+  {name:"Hiyayakko",jp:"冷奴",cat:"tofu",visual:"🧊",region:"Nationale",
+   desc:"Bloc de tofu soyeux froid garni de gingembre râpé, katsuobushi (bonite séchée), oignons verts ciselés et sauce soja. Simple, rafraîchissant en été. Premier plat servi dans les izakayas dès la chaleur.",
+   adresse:"Tout izakaya traditionnel — Gonpachi (Tokyo, Nishi-Azabu) version soignée."},
+
+  {name:"Sunomono",jp:"酢の物",cat:"légumes",visual:"🥒",region:"Nationale",
+   desc:"Salade vinaigrée de concombre (kyuri), wakame, crevette, poulpe, dans sauce amazu (vinaigre-sucre-sel). Amuse-bouche d'izakaya ou début de kaiseki. Net, acide, frais.",
+   adresse:"N'importe quel izakaya traditionnel."},
+
+  {name:"Kinpira Gobō",jp:"きんぴらごぼう",cat:"légumes",visual:"🥕",region:"Tōkyō",
+   desc:"Burdock et carotte julienne sautés dans huile sésame, sauce soja-mirin-saké, piment. Plat de la cuisine Edo-shitamachi (vieux Tokyo populaire). Texture croquante, goût terreux et sucré.",
+   adresse:"Cuisine familiale / izakayas traditionnels."},
+
+  {name:"Karaage de légumes",jp:"野菜の唐揚げ",cat:"légumes",visual:"🫑",region:"Nationale",
+   desc:"Légumes (champignons, poivron, aubergine) marinés soja-gingembre, frits. Déclinaison végétale du karaage classique, omniprésente en izakaya.",
+   adresse:"Izakayas végétariens à Tokyo — T's TanTan (Tokyo station) ou Ain Soph (Shinjuku)."},
+
+  {name:"Edamame",jp:"枝豆",cat:"légumes",visual:"🫘",region:"Nationale",
+   desc:"Fèves de soja immatures bouillies et salées. Incontournable apéritif de l'izakaya — servi automatiquement à l'arrivée dans beaucoup d'établissements. Simple, universel, invariablement satisfaisant.",
+   adresse:"Tout izakaya sans exception — le test du bon izakaya commence par la fraîcheur de ses edamame."},
+
+  {name:"Goma-ae",jp:"胡麻和え",cat:"légumes",visual:"🥬",region:"Nationale",
+   desc:"Légumes blancs (épinards, haricots verts, konnyaku, aubergines) mélangés à une sauce au sésame blanc grillé sucré-salé. Accompagnement classique de la cuisine washoku, kaiseki et repas de bento.",
+   adresse:"Tout restaurant japonais traditionnel — présent dans chaque bento et plateau kaiseki."},
+
+  {name:"Obanzai",jp:"おばんざい",cat:"légumes",visual:"🌿",region:"Kyōto",
+   desc:"Cuisine ménagère traditionnelle de Kyoto — petits plats quotidiens de légumes locaux (kyo-yasai), tofu, petits poissons mijotés. Philosophie anti-gaspillage ancestrale. Servie en petits bols nombreux.",
+   adresse:"Oryori Menami (Kyoto, Pontocho) — obanzai authentique / nombreux restaurants du Nishiki Market."},
+
+  // ─── SOUPES ─────────────────────────────────────────────────────────────────
+  {name:"Miso Shiru",jp:"味噌汁",cat:"soupe",visual:"🍵",region:"Nationale",
+   desc:"Soupe base dashi (konbu, bonite séchée), pâte miso, garnitures variables : tofu, wakame, palourdes, navet. Omniprésente au petit déjeuner japonais. Le miso change tout : shiro (blanc doux), aka (rouge fort), awase (mixte).",
+   adresse:"N'importe quelle maison ou ryokan / Dashi Bar Bon Daichi (Tokyo, Kichijoji) — dashi premium."},
+
+  {name:"Oden",jp:"おでん",cat:"soupe",visual:"🍢",region:"Tōkyō / Nagoya",
+   desc:"Ragoût hivernal longue cuisson : daikon, œuf, poulpe, konjac, tofu, chikuwa dans bouillon dashi-soja clair. Tokyo : bouillon léger. Nagoya : bouillon soja foncé épais. Vendu en convenience stores (7-Eleven) en hiver.",
+   adresse:"Otafuku (Tokyo, Asakusa) — fondé 1945, oden mijoté au comptoir, atmosphère Shōwa."},
+
+  {name:"Tonjiru",jp:"豚汁",cat:"soupe",visual:"🫕",region:"Nationale",
+   desc:"Soupe miso robuste avec porc, racine de burdock, carottes, konjac, tofu. Version hivernale du miso shiru. Repas complet en soi.",
+   adresse:"Tenya (chaîne tempura) inclut tonjiru / Izakayas traditionnels."},
+
+  {name:"Shiruko / Zenzai",jp:"しるこ / ぜんざい",cat:"soupe",visual:"🍮",region:"Kyōto / Osaka",
+   desc:"Soupe sucrée azuki avec mochi (Shiruko = liquide, Zenzai = épais). Plat hivernal emblématique, servi dans théâtres Kabuki et temples. Kyo-zenzai de Kyoto avec mochi grillé.",
+   adresse:"Kagizen Yoshifusa (Kyoto, Gion) — fondé 1465, zenzai traditionnel."},
+
+  {name:"Kakejiru / Kenchinjiru",jp:"けんちん汁",cat:"soupe",visual:"🌿",region:"Kamakura (Kanagawa)",
+   desc:"Bouillon de légumes racines, tofu, konbu — cuisine shōjin (bouddhiste, sans viande). Né au temple Kenchō-ji de Kamakura au XIII°s. Profond, végétalien de fait.",
+   adresse:"Restaurant du temple Kenchoji (Kamakura) — accessible aux visiteurs."},
+
+  {name:"Nabe",jp:"鍋",cat:"soupe",visual:"🫕",region:"Nationale",
+   desc:"Fondue japonaise — pot commun sur réchaud. Sukiyaki et shabu sont des variantes. Yosenabe (tout ensemble), chanko nabe (sumo), ishikari nabe (saumon hokkaido). Plat de socialisation hivernal.",
+   adresse:"Tableaux de chanko nabe près de Ryōgoku (Tokyo, quartier sumo)."},
+
+  {name:"Motsunabe",jp:"もつ鍋",cat:"soupe",visual:"🔥",region:"Fukuoka / Hakata",
+   desc:"Hot-pot d'abats de bœuf ou porc (intestins, tripes) avec chou, ail, poireaux, piment fort, dans bouillon miso ou shoyu. Plat de quartier populaire à Fukuoka, exporté nationalement depuis les années 1990.",
+   adresse:"Izakayas spécialisées à Hakata / Motsu Nabe Rakuten (Tokyo, Shinjuku)."},
+
+  {name:"Mizutaki",jp:"水炊き",cat:"soupe",visual:"🍲",region:"Fukuoka / Hakata",
+   desc:"Poulet et légumes cuits dans un bouillon clair konbu sans assaisonnement, trempés dans une sauce ponzu citronnée. Simple, délicat, très différent des autres nabe. Plat de mariage et de célébration à Fukuoka.",
+   adresse:"Hakata-ya (Tokyo, Hakata-style) — ou Sou (Fukuoka, Hakata) pour l'original."},
+
+  // ─── FERMENTÉS / CONDIMENTS ─────────────────────────────────────────────────
+  {name:"Tsukemono",jp:"漬物",cat:"fermenté",visual:"🥒",region:"Kyōto (Kyo-tsukemono)",
+   desc:"Légumes lactofermentés ou marinés : umeboshi (prune salée), natto, kimchi japanisé, nukazuke (fermenté dans son de riz), takuan (daikon jaune). Kyoto : tsukemono au miso, saké, vinaigre — goût plus doux.",
+   adresse:"Nishiki Market (Kyoto) — épiciers tsukemono, dégustation libre."},
+
+  {name:"Natto",jp:"納豆",cat:"fermenté",visual:"🫘",region:"Ibaraki (Mito) / Tōkyō",
+   desc:"Soja fermenté bacillus subtilis — gluant, filant, odorant. Mito (Ibaraki) est la capitale. Consommation quasi-exclusivement Kanto et nord — le Kansai résiste. Riche en vitamine K2, probiotiques.",
+   adresse:"Produit d'épicerie — Takano Fruit Parlor (Tokyo) pour version haut de gamme."},
+
+  {name:"Miso (pâte)",jp:"味噌",cat:"fermenté",visual:"🫙",region:"Aichi (Hatcho) / Nagano / Kyōto",
+   desc:"Pâte de soja fermenté avec riz ou orge et koji. Hatcho miso (Aichi) : couleur foncée, fermenté 3 ans, goût intense. Shiro miso (Kyoto) : blanc, doux, sucré. Chaque région a son style.",
+   adresse:"Marukome (nationale) — ou boutiques spécialisées au Nishiki Market (Kyoto)."},
+
+  {name:"Funazushi",jp:"鮒寿司",cat:"fermenté",visual:"🐟",region:"Shiga (Lac Biwa)",
+   desc:"Ancêtre direct du sushi : carpe du lac Biwa (narezushi) fermentée dans le riz pendant 1 à 3 ans. Odeur très prononcée, saveur umami extrêmement intense. Plus vieux sushi du Japon — tradition millénaire.",
+   adresse:"Restaurants traditionnels à Otsu (Shiga) — Kitashina ou Hyousakichi."},
+
+  {name:"Shiokara",jp:"塩辛",cat:"fermenté",visual:"🦑",region:"Kyūshū / Nationale",
+   desc:"Viscères et chair de céphalopodes (calmar, seiche) ou autres fruits de mer fermentés dans le sel. Condiment très fort et salé, servi en très petite quantité avec le saké ou le riz. Goût umami extrême.",
+   adresse:"Izakayas traditionnels de Kyushu / Yokohama Chinatown pour variantes de qualité."},
+
+  {name:"Ponzu",jp:"ポン酢",cat:"condiment",visual:"🍋",region:"Nationale",
+   desc:"Sauce agrumes (yuzu, sudachi, kabosu) + vinaigre de riz + soja + mirin + dashi. Condiment universel pour shabu-shabu, carpaccio de poisson, nabe. La qualité varie radicalement selon la proportion d'agrumes réels.",
+   adresse:"Sauce achetée en épicerie fine — Fundodai (Miyazaki) référence artisanale."},
+
+  {name:"Wasabi",jp:"わさび",cat:"condiment",visual:"🌿",region:"Shizuoka / Nagano",
+   desc:"Rhizome râpé — pas la pâte verte en tube (raifort coloré). Le vrai wasabi fraîchement râpé perd 70% de ses arômes en 15 min. Shizuoka produit 70% du wasabi japonais en eaux de montagne.",
+   adresse:"Daio Wasabi Farm (Nagano, Azumino) — plantation visite + restaurant, soba et glace wasabi."},
+
+  {name:"Yuzu Koshō",jp:"柚子胡椒",cat:"condiment",visual:"🌶️",region:"Kyūshū",
+   desc:"Condiment pâte yuzu + piment + sel — vert (piment vert + yuzu vert) ou rouge. Origine Kyushu, devenu national. Parfum floral intense, chaleur retardée. Avec yakitori, sashimi, gyoza.",
+   adresse:"Produit d'épicerie — Nakanaka (Fukuoka) référence artisanale."},
+
+  // ─── BOISSONS / ALCOOL ──────────────────────────────────────────────────────
+  {name:"Saké",jp:"日本酒",cat:"alcool",visual:"🍶",region:"Niigata / Kyōto / Akita",
+   desc:"Alcool de riz fermenté, 12-16°. Classifications : junmai (riz pur), ginjo (poli 40%+), daiginjo (poli 50%+). Niigata : style tanrei karakuchi (sec et limpide). Kyoto : fushimizu (eau douce, saké soyeux). Servi froid (ginjo) ou chaud (honjozo).",
+   adresse:"Bar à saké Fushimi (Kyoto, Fushimi-Momoyama) — quartier des brasseries, visite et dégustation."},
+
+  {name:"Shōchū",jp:"焼酎",cat:"alcool",visual:"🥃",region:"Kyūshū (Kagoshima, Miyazaki, Kumamoto)",
+   desc:"Eau-de-vie distillée de patate douce (imo-jochu), orge (mugi), riz, ou canne. 25-35°. Kagoshima : imo-jochu aromatique de patate douce. Kumamoto : kome-jochu de riz. Moins connu à l'export que le saké mais dominant au Japon.",
+   adresse:"Izakayas de Kyushu — ou bar spécialisé Shochu Authority (Tokyo, Ebisu)."},
+
+  {name:"Whisky Japonais",jp:"ウイスキー",cat:"alcool",visual:"🥃",region:"Hokkaidō (Yoichi) / Yamanashi",
+   desc:"Héritage des distilleries Nikka (Yoichi, 1934) et Suntory (Yamazaki, 1923). Influencé par le Scotch, style plus délicat. Nikka Yoichi single malt : tourbé. Yamazaki 12 ans : fruité, sherry. Pénurie mondiale depuis 2015.",
+   adresse:"Bar Zoetrope (Tokyo, Shinjuku) — 200+ whiskies japonais, sommelier dédié."},
+
+  {name:"Umeshu",jp:"梅酒",cat:"alcool",visual:"🍑",region:"Wakayama / Osaka",
+   desc:"Liqueur de prune verte macérée dans shōchū ou saké avec sucre roux. Wakayama (Kishu) produit 60% des ume du Japon. Doux, acide, 10-15°. Servi sur glace ou dilué eau gazeuse (chu-hai).",
+   adresse:"Choya Umeshu (chaîne nationale) / bar Nakameguro (Tokyo) pour umeshu craft."},
+
+  {name:"Matcha",jp:"抹茶",cat:"alcool",visual:"🍵",region:"Uji (Kyōto) / Nishio (Aichi)",
+   desc:"Thé vert en poudre, préparé fouetté (cérémonie chanoyu) ou en boisson moderne. Uji (Kyoto) et Nishio (Aichi) : AOP mondiales. Teneur en catéchines, théanine, caféine. Utilisé en pâtisserie, glace, latte.",
+   adresse:"Ippodo Tea (Kyoto, Teramachi) — matcha depuis 1717, salon de thé, cérémonie quotidienne."},
+
+  {name:"Ramune",jp:"ラムネ",cat:"alcool",visual:"🫧",region:"Nationale",
+   desc:"Limonade gazeuse très sucrée en bouteille de verre hermétique fermée par une bille de verre — on la fait tomber pour l'ouvrir. Emblème des matsuri estivaux. Nom dérivé de 'lemonade' anglais via la marine britannique.",
+   adresse:"Stands de festivals partout en été / distributeurs automatiques / Pokka Sapporo référence nationale."},
+
+  {name:"Amazake",jp:"甘酒",cat:"alcool",visual:"☕",region:"Nationale",
+   desc:"Boisson épaisse et sucrée à base de riz fermenté avec koji (sans alcool ou quasi nul). Servie chaude en hiver dans les temples et sanctuaires lors des fêtes du Nouvel An. Riche en acides aminés et enzymes.",
+   adresse:"Temples et sanctuaires (Meiji Jingu, Tokyo / Fushimi Inari, Kyoto) — distributeurs automatiques en hiver."},
+
+  {name:"Kissaten",jp:"喫茶店",cat:"alcool",visual:"☕",region:"Nationale (Tōkyō / Ōsaka)",
+   desc:"Café rétro de l'ère Shōwa (années 1950-80), servant café siphon, cream soda, sandwichs au pain de mie, parfait et jus de fruits. Ambiance figée, atmosphère unique. Culture en voie de disparition — à protéger.",
+   adresse:"Kissa Suigei (Awaza, Osaka) — déco Shōwa sublime / Café de l'Ambre (Tokyo, Ginza) — fondé 1948."},
+
+  // ─── HAUTE CUISINE ──────────────────────────────────────────────────────────
+  {name:"Kaiseki Ryōri",jp:"懐石料理",cat:"riz",visual:"🌿",region:"Kyōto",
+   desc:"Gastronomie formelle japonaise : succession de petits plats selon les saisons (hashun). Chaque élément — vaisselle, présentation, ingrédient — est choisi pour son rapport à la saison précise.",
+   adresse:"Kikunoi (Kyoto, Higashiyama) — 3 étoiles Michelin, kaiseki accessible (midi dès 6 000¥)."},
+
+  {name:"Kappo",jp:"割烹",cat:"riz",visual:"👨‍🍳",region:"Ōsaka / Tōkyō",
+   desc:"Restaurant de comptoir ouvert où le chef cuisine devant les clients — entre l'izakaya et le kaiseki. Format plus direct, moins codifié. Osaka est le berceau historique.",
+   adresse:"Kappo Nakamura (Osaka, Kitashinchi) — kappo traditionnel, cuisine de saison."},
+
+];
+
+const catLabels = {
+  nouilles:"nouilles", riz:"riz", poisson:"poisson", viande:"viande",
+  soupe:"soupe", street:"street", dessert:"dessert", pâtisserie:"pâtisserie",
+  tofu:"tofu", légumes:"légumes", fermenté:"fermenté", condiment:"condiment",
+  alcool:"alcool", friture:"friture", grill:"grillades"
+};
+
+let activeFilter = 'all';
+let searchTerm = '';
+
+function buildCard(d) {
+  return `<div class="card" data-cat="${d.cat}" data-name="${d.name.toLowerCase()} ${d.jp} ${d.desc.toLowerCase()}">
+    <span class="card-visual">${d.visual}</span>
+    <div class="card-header">
+      <div>
+        <div class="dish-name">${d.name}</div>
+        <div class="dish-jp">${d.jp}</div>
+      </div>
+      <span class="tag tag-${d.cat}">${catLabels[d.cat]||d.cat}</span>
+    </div>
+    <div class="desc">${d.desc}</div>
+    <div class="meta">
+      <div class="meta-item">
+        <label>Région</label>
+        <div class="value">${d.region}</div>
+      </div>
+      <div class="meta-item adresse">
+        <label>Adresse recommandée</label>
+        <div class="value">${d.adresse}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function render() {
+  const grid = document.getElementById('grid');
+  const count = document.getElementById('count');
+  let visible = 0;
+  grid.innerHTML = dishes.map(d => {
+    const catOk = activeFilter === 'all' || d.cat === activeFilter;
+    const searchOk = !searchTerm ||
+      d.name.toLowerCase().includes(searchTerm) ||
+      d.jp.includes(searchTerm) ||
+      d.desc.toLowerCase().includes(searchTerm) ||
+      d.region.toLowerCase().includes(searchTerm);
+    if (catOk && searchOk) { visible++; return buildCard(d); }
+    return '';
+  }).join('');
+  count.textContent = `${visible} plat${visible > 1 ? 's' : ''} affiché${visible > 1 ? 's' : ''} sur ${dishes.length}`;
+}
+
+function filter(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function search(val) {
+  searchTerm = val.toLowerCase().trim();
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
